@@ -1,0 +1,68 @@
+{
+    "id": "com.athom.heat-it",
+    "version": "0.0.1",
+    "compatibility": ">=1.2.0",
+    "name": {
+        "en": "Heat It Zwave thermostat",
+        "nl": "Heat It Zwave thermostaat"
+    },
+    "description": {
+        "en": "Heat It thermostat",
+        "nl": "Heat It thermostaat"
+    },
+    "drivers": [
+        {
+            "id": "my_driver",
+            "name": {
+                "en": "My Driver"
+            },
+            "class": "socket",
+            "capabilities": [ "onoff", "dim" ],
+            "zwave": {
+                "manufacturerId": 1234,
+                "productTypeId": 1111,
+                "productId": [ 1111, 1112 ], // can also be an array to support multiple devices
+                "learnmode": {
+                    "image": "/drivers/my_driver/assets/learnmode.svg",
+                    "instruction": {
+                        "en": "Press the button on your device three times"
+                    }
+                },
+                "associationGroups": [ 1, 3 ],
+                "associationGroupsOptions": {
+                    "3": {
+                        "hint": {
+                            "en": "This is my app-specific hint"
+                        }
+                    }
+                },
+                "wakeUpInterval": 900, // in seconds, range: 30-16777215
+                "defaultConfiguration": [
+                    {
+                        "id": 3, // parameter number
+                        "size": 1, // 1, 2 or 4
+                        "value": 123 // signed int, (-128, 127) for size=1, (-32768, -32767) for size=2, (-2147483648, 2147483647) for size=4
+                        // or "0xFF", "0xFFFF", "0xFFFFFFFF" for raw values as of Homey >=1.0.5
+                    }
+                ],
+                "multiChannelNodes": {
+                    "1": {
+                        "class": "socket",
+                        "capabilities": [
+                            "onoff",
+                            "measure_power",
+                            "meter_power"
+                        ],
+                        "icon": "/drivers/my_driver/assets/icon-multichannelnode1.svg",
+                        "name": {
+                            "en": "MultiChannel device 1"
+                        }
+                    },
+                    "2": {
+                        ...
+                    }
+                }
+            }
+        }
+    ]
+}
